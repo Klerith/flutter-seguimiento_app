@@ -46,7 +46,6 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
         future: this.checkGpsYLocation(context),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           
-          print(snapshot.data);
           if ( snapshot.hasData ) {
             return Center(child: Text( snapshot.data ) );
           } else {
