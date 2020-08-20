@@ -33,7 +33,13 @@ class SearchBar extends StatelessWidget {
         width: width,
         child: GestureDetector(
           onTap: () async {
-            final resultado = await showSearch(context: context, delegate: SearchDestination());
+            
+            final proximidad = context.bloc<MiUbicacionBloc>().state.ubicacion;
+
+            final resultado = await showSearch(
+              context: context, 
+              delegate: SearchDestination( proximidad )
+            );
             this.retornoBusqueda( context, resultado );
           },
           child: Container(
