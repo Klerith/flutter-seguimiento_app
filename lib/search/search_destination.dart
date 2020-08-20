@@ -11,8 +11,9 @@ class SearchDestination extends SearchDelegate<SearchResult> {
   final String searchFieldLabel;
   final TrafficService _trafficService;
   final LatLng proximidad;
+  final List<SearchResult> historial;
 
-  SearchDestination( this.proximidad )
+  SearchDestination( this.proximidad, this.historial )
     : this.searchFieldLabel = 'Buscar...',
       this._trafficService = new TrafficService();
 
@@ -55,7 +56,20 @@ class SearchDestination extends SearchDelegate<SearchResult> {
             onTap: () {
               this.close(context, SearchResult( cancelo: false, manual: true ) ); 
             },
-          )
+          ),
+
+          ...this.historial.map(
+            ( result ) => ListTile(
+              leading: Icon( Icons.history ),
+              title: Text( result.nombreDestino ),
+              subtitle: Text( result.descripcion ),
+              onTap: () {
+                this.close(context, result );
+              },
+            )
+          ).toList()
+
+
         ],
       );
 
@@ -72,8 +86,10 @@ class SearchDestination extends SearchDelegate<SearchResult> {
       return Container();
     }
 
-    return FutureBuilder(
-      future: this._trafficService.getResultadosPorQuery( this.query.trim(), proximidad ),
+    this._trafficService.getSugerenciasPorQuery( this.query.trim(), this.proximidad );
+
+    return StreamBuilder(
+      stream: this._trafficService.sugerenciasStream,
       builder: (BuildContext context, AsyncSnapshot<SearchResponse> snapshot) {
 
         if ( !snapshot.hasData ) {
@@ -101,7 +117,17 @@ class SearchDestination extends SearchDelegate<SearchResult> {
               title: Text( lugar.textEs ),
               subtitle: Text( lugar.placeNameEs ),
               onTap: () {
-                print( lugar );
+                
+
+                this.close(context,  SearchResult(
+                  cancelo: false,
+                  manual: false,
+                  position: LatLng( lugar.center[1], lugar.center[0]),
+                  nombreDestino: lugar.textEs,
+                  descripcion: lugar.placeNameEs
+                ));
+
+
               },
             );
           }, 
