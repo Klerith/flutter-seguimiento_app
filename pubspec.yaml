@@ -34,6 +34,7 @@ dependencies:
   google_maps_flutter: ^0.5.30
   dio: ^3.0.10
   animate_do: ^1.7.2
+  polyline: ^1.0.2
 
 dev_dependencies:
   flutter_test:
