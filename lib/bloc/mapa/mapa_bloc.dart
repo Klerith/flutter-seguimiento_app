@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart' show Colors;
+import 'package:flutter/material.dart' show Colors, Offset;
+import 'package:mapa_app/helpers/helpers.dart';
 import 'package:meta/meta.dart';
 
 import 'package:mapa_app/themes/uber_map_theme.dart';
@@ -122,21 +123,50 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
     final currentPolylines = state.polylines;
     currentPolylines['mi_ruta_destino'] = this._miRutaDestino;
 
+    // Icono inicio
+    // final iconInicio  = await getAssetImageMarker();
+    final iconInicio  = await getMarkerInicioIcon( event.duracion.toInt() );
+
+    final iconDestino = await getMarkerDestinoIcon(event.nombreDestino, event.distancia);
+    // final iconDestino = await getNetworkImageMarker();
 
     // Marcadores
     final markerInicio = new Marker(
+      anchor: Offset(0.0, 1.0),
       markerId: MarkerId('inicio'),
-      position: event.rutaCoordenadas[0]
+      position: event.rutaCoordenadas[0],
+      icon: iconInicio,
+      infoWindow: InfoWindow(
+        title: 'Mi Ubicación',
+        snippet: 'Duración recorrido: ${ (event.duracion / 60).floor() } minutos',
+      )
     );
+
+    double kilometros = event.distancia / 1000;
+    kilometros = (kilometros * 100).floor().toDouble();
+    kilometros = kilometros / 100;
 
     final markerDestino = new Marker(
       markerId: MarkerId('destino'),
-      position: event.rutaCoordenadas[ event.rutaCoordenadas.length - 1 ]
+      position: event.rutaCoordenadas[ event.rutaCoordenadas.length - 1 ],
+      icon: iconDestino,
+      anchor: Offset(0.1, 0.90),
+      infoWindow: InfoWindow(
+        title: event.nombreDestino,
+        snippet: 'Distancia: $kilometros Km',
+      )
     );
 
     final newMarkers = { ...state.markers };
     newMarkers['inicio']  = markerInicio;
     newMarkers['destino'] = markerDestino;
+
+    Future.delayed(Duration(milliseconds: 300)).then(
+      (value) {
+        // _mapController.showMarkerInfoWindow(MarkerId('inicio'));
+        // _mapController.showMarkerInfoWindow(MarkerId('destino'));
+      }
+    );
 
 
     yield state.copyWith(
