@@ -219,6 +219,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  polyline_do:
+    dependency: "direct main"
+    description:
+      name: polyline_do
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   provider:
     dependency: transitive
     description:
