@@ -16,7 +16,7 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
   MapaBloc() : super( new MapaState() );
 
   // Controlador del mapa
-  GoogleMapController _mapController;
+  GoogleMapController? _mapController;
 
   // Polylines
   Polyline _miRuta = new Polyline(
@@ -34,7 +34,7 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
   void initMapa( GoogleMapController controller ) {
     if ( !state.mapaListo ) {
       this._mapController = controller;
-      this._mapController.setMapStyle( jsonEncode(uberMapTheme) );
+      this._mapController!.setMapStyle( jsonEncode(uberMapTheme) );
 
       add( OnMapaListo() );
     }
@@ -81,7 +81,7 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
     this._miRuta = this._miRuta.copyWith( pointsParam: points );
 
     final currentPolylines = state.polylines;
-    currentPolylines['mi_ruta'] = this._miRuta;
+    currentPolylines?['mi_ruta'] = this._miRuta;
 
     yield state.copyWith( polylines: currentPolylines );
 
@@ -96,7 +96,7 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
     }
 
     final currentPolylines = state.polylines;
-    currentPolylines['mi_ruta'] = this._miRuta;
+    currentPolylines?['mi_ruta'] = this._miRuta;
 
     yield state.copyWith( 
       dibujarRecorrido: !state.dibujarRecorrido,
@@ -120,7 +120,7 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
     );
 
     final currentPolylines = state.polylines;
-    currentPolylines['mi_ruta_destino'] = this._miRutaDestino;
+    currentPolylines?['mi_ruta_destino'] = this._miRutaDestino;
 
 
     yield state.copyWith(

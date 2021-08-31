@@ -4,8 +4,8 @@ class BtnUbicacion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final mapaBloc = context.bloc<MapaBloc>();
-    final miUbicacionBloc = context.bloc<MiUbicacionBloc>();
+    final mapaBloc = context.read<MapaBloc>();
+    final miUbicacionBloc = context.read<MiUbicacionBloc>();
 
     return Container(
       margin: EdgeInsets.only(bottom: 10 ),
@@ -17,7 +17,7 @@ class BtnUbicacion extends StatelessWidget {
           onPressed: () {
             
             final destino = miUbicacionBloc.state.ubicacion;
-            mapaBloc.moverCamara(destino);
+            mapaBloc.moverCamara(destino!);
 
           },
         ),

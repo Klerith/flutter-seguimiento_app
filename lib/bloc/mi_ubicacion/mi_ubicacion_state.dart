@@ -5,7 +5,7 @@ class MiUbicacionState {
 
   final bool siguiendo;
   final bool existeUbicacion;
-  final LatLng ubicacion;
+  final LatLng? ubicacion;
 
   MiUbicacionState({
     this.siguiendo = true,
@@ -14,9 +14,9 @@ class MiUbicacionState {
   }); 
 
   MiUbicacionState copyWith({
-    bool siguiendo,
-    bool existeUbicacion,
-    LatLng ubicacion,
+    bool? siguiendo,
+    bool? existeUbicacion,
+    LatLng? ubicacion,
   }) => new MiUbicacionState(
     siguiendo       : siguiendo ?? this.siguiendo,
     existeUbicacion : existeUbicacion ?? this.existeUbicacion,

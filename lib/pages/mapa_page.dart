@@ -18,14 +18,14 @@ class _MapaPageState extends State<MapaPage> {
   @override
   void initState() {
     
-    context.bloc<MiUbicacionBloc>().iniciarSeguimiento();
+    context.read<MiUbicacionBloc>().iniciarSeguimiento();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    context.bloc<MiUbicacionBloc>().cancelarSeguimiento();
+    context.read<MiUbicacionBloc>().cancelarSeguimiento();
     super.dispose();
   }
 
@@ -74,10 +74,10 @@ class _MapaPageState extends State<MapaPage> {
 
     final mapaBloc = BlocProvider.of<MapaBloc>(context);
 
-    mapaBloc.add( OnNuevaUbicacion( state.ubicacion ) );
+    mapaBloc.add( OnNuevaUbicacion( state.ubicacion! ) );
 
     final cameraPosition = new CameraPosition(
-      target: state.ubicacion,
+      target: state.ubicacion!,
       zoom: 15
     );
 
@@ -89,7 +89,7 @@ class _MapaPageState extends State<MapaPage> {
           myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
           onMapCreated: mapaBloc.initMapa,
-          polylines:  mapaBloc.state.polylines.values.toSet(),
+          polylines:  mapaBloc.state.polylines!.values.toSet(),
           onCameraMove: ( cameraPosition ) {
             // cameraPosition.target = LatLng central del mapa
             mapaBloc.add( OnMovioMapa( cameraPosition.target ));

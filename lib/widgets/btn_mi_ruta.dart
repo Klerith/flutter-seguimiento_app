@@ -4,7 +4,7 @@ class BtnMiRuta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final mapaBloc = context.bloc<MapaBloc>();
+    final mapaBloc = context.read<MapaBloc>();
 
     return Container(
       margin: EdgeInsets.only(bottom: 10 ),

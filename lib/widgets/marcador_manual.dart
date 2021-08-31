@@ -43,7 +43,7 @@ class _BuildMarcadorManual extends StatelessWidget {
               child: IconButton(
                 icon: Icon( Icons.arrow_back, color: Colors.black87 ), 
                 onPressed: () {
-                  context.bloc<BusquedaBloc>().add( OnDesactivarMarcadorManual() );
+                  context.read<BusquedaBloc>().add( OnDesactivarMarcadorManual() );
                 }
               ),
             ),
@@ -90,12 +90,12 @@ class _BuildMarcadorManual extends StatelessWidget {
     calculandoAlerta(context);
 
     final trafficService = new TrafficService();
-    final mapaBloc = context.bloc<MapaBloc>();
+    final mapaBloc = context.read<MapaBloc>();
     
-    final inicio  = context.bloc<MiUbicacionBloc>().state.ubicacion;
+    final inicio  = context.read<MiUbicacionBloc>().state.ubicacion;
     final destino = mapaBloc.state.ubicacionCentral;
 
-    final trafficResponse = await trafficService.getCoordsInicioYDestino(inicio, destino);
+    final trafficResponse = await trafficService.getCoordsInicioYDestino(inicio!, destino!);
 
     final geometry  = trafficResponse.routes[0].geometry;
     final duracion  = trafficResponse.routes[0].duration;
@@ -103,6 +103,8 @@ class _BuildMarcadorManual extends StatelessWidget {
 
     // Decodificar los puntos del geometry
     final points = Poly.Polyline.Decode( encodedString: geometry, precision: 6 ).decodedCoords;
+
+    
     final List<LatLng> rutaCoordenadas = points.map(
       (point) => LatLng(point[0], point[1])
     ).toList();
@@ -110,7 +112,7 @@ class _BuildMarcadorManual extends StatelessWidget {
     mapaBloc.add( OnCrearRutaInicioDestino(rutaCoordenadas, distancia, duracion) );
 
     Navigator.of(context).pop();
-    context.bloc<BusquedaBloc>().add( OnDesactivarMarcadorManual() );
+    context.read<BusquedaBloc>().add( OnDesactivarMarcadorManual() );
   }
 
 }

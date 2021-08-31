@@ -14,17 +14,16 @@ class MiUbicacionBloc extends Bloc<MiUbicacionEvent, MiUbicacionState> {
 
   // Geolocator
   final _geolocator = new Geolocator();
-  StreamSubscription<Position> _positionSubscription;
+  StreamSubscription<Position>? _positionSubscription;
 
 
   void iniciarSeguimiento() {
 
-    final locationOptions = LocationOptions(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 10
-    );
 
-    _positionSubscription = this._geolocator.getPositionStream(locationOptions).listen(( Position position ) {
+    _positionSubscription = GeolocatorPlatform.instance.getPositionStream(
+      desiredAccuracy: LocationAccuracy.high,
+      distanceFilter: 10
+    ).listen(( Position position ) {
       final nuevaUbicacion = new LatLng(position.latitude, position.longitude);
       add( OnUbicacionCambio( nuevaUbicacion ) );
     });

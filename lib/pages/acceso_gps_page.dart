@@ -16,13 +16,13 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
   @override
   void initState() {
     
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
 
@@ -78,10 +78,10 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
         await Navigator.pushReplacementNamed(context, 'loading');
         break;
         
-      case PermissionStatus.undetermined:
       case PermissionStatus.denied:
       case PermissionStatus.restricted:
       case PermissionStatus.permanentlyDenied:
+      case PermissionStatus.limited:
         openAppSettings();
     }
     

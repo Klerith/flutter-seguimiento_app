@@ -10,16 +10,16 @@ String drivingResponseToJson(DrivingResponse data) => json.encode(data.toJson())
 
 class DrivingResponse {
     DrivingResponse({
-        this.routes,
-        this.waypoints,
+        required this.routes,
+        required this.waypoints,
         this.code,
         this.uuid,
     });
 
     List<Route> routes;
     List<Waypoint> waypoints;
-    String code;
-    String uuid;
+    String? code;
+    String? uuid;
 
     factory DrivingResponse.fromJson(Map<String, dynamic> json) => DrivingResponse(
         routes: List<Route>.from(json["routes"].map((x) => Route.fromJson(x))),
@@ -38,12 +38,12 @@ class DrivingResponse {
 
 class Route {
     Route({
-        this.weightName,
-        this.legs,
-        this.geometry,
-        this.distance,
-        this.duration,
-        this.weight,
+        required this.weightName,
+        required this.legs,
+        required this.geometry,
+        required this.distance,
+        required this.duration,
+        required this.weight,
     });
 
     String weightName;
@@ -74,11 +74,11 @@ class Route {
 
 class Leg {
     Leg({
-        this.summary,
-        this.steps,
-        this.distance,
-        this.duration,
-        this.weight,
+        required this.summary,
+        required this.steps,
+        required this.distance,
+        required this.duration,
+        required this.weight,
     });
 
     String summary;
@@ -106,9 +106,9 @@ class Leg {
 
 class Waypoint {
     Waypoint({
-        this.distance,
-        this.name,
-        this.location,
+        required this.distance,
+        required this.name,
+        required this.location,
     });
 
     double distance;

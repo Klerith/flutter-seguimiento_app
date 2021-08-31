@@ -18,13 +18,13 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
 
@@ -32,7 +32,7 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) async{
     
     if (  state == AppLifecycleState.resumed ) {
-      if ( await Geolocator().isLocationServiceEnabled()  ) {
+      if ( await GeolocatorPlatform.instance.isLocationServiceEnabled() ){
         Navigator.pushReplacement(context, navegarMapaFadeIn(context, MapaPage() ));
       }
     }
@@ -62,7 +62,7 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
     // PermisoGPS
     final permisoGPS = await Permission.location.isGranted;
     // GPS está activo
-    final gpsActivo  = await Geolocator().isLocationServiceEnabled();
+    final gpsActivo  = await Geolocator.isLocationServiceEnabled();
 
     if ( permisoGPS && gpsActivo ) {
       Navigator.pushReplacement(context, navegarMapaFadeIn(context, MapaPage() ));

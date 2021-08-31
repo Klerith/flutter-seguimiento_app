@@ -10,7 +10,7 @@ class BusquedaState {
   });
 
   BusquedaState copyWith({
-    bool seleccionManual
+    bool? seleccionManual
   }) => BusquedaState(
     seleccionManual: seleccionManual ?? this.seleccionManual
   );
