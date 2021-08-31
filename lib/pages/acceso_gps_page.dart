@@ -71,6 +71,7 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
 
   Future accesoGPS( PermissionStatus status ) async {
 
+    print(status);
 
     switch ( status ) {
       

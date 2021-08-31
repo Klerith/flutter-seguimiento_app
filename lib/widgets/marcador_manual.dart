@@ -103,11 +103,22 @@ class _BuildMarcadorManual extends StatelessWidget {
 
     // Decodificar los puntos del geometry
     final points = Poly.Polyline.Decode( encodedString: geometry, precision: 6 ).decodedCoords;
+    
+    // PolylinePoints polylinePoints = PolylinePoints();
+    // List<PointLatLng> result = polylinePoints.decodePolyline(geometry);
+    // final result = decodePolyline(geometry);
+    // final result = Poly.decodePolyline(geometry);
+    print(points);
 
     
     final List<LatLng> rutaCoordenadas = points.map(
-      (point) => LatLng(point[0], point[1])
+      (point) {
+        print(point);
+        return LatLng( point[0], point[1]);
+      }
     ).toList();
+
+    print( rutaCoordenadas );
 
     mapaBloc.add( OnCrearRutaInicioDestino(rutaCoordenadas, distancia, duracion) );
 

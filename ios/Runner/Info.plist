@@ -31,9 +31,11 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Necesito saber dónde estas</string>
 	<key>UIBackgroundModes</key>
+	
 	<array>
 		<string>location</string>
 	</array>
+	
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

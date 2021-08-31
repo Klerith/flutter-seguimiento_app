@@ -27,12 +27,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^7.2.0
-  flutter_polyline_points: ^1.0.0
   geolocator: ^7.6.0
   google_maps_flutter: ^2.0.6
   http_parser: ^4.0.0
   permission_handler: ^8.1.4+2
-  polyline: ^1.0.2
 
 dev_dependencies:
   flutter_test:
